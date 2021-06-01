@@ -15,11 +15,6 @@
 
 //LoRa Config
 #define BAND 866E6  //868 MHz
-#define LORA_DIO0 12 //868 MHz
-
-//Oled Config
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
 
 //Objects
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RST); // Display Object
@@ -89,12 +84,16 @@ void die(void){
 
 void cmd_send()
 {
-  Serial.println("Send command");
+  Serial.print("Sending Hello");
+
+  LoRa.beginPacket();
+  LoRa.print("hello!");
+  LoRa.endPacket();
 }
 
 void cmd_unrecognized(const char *cmd)
 {
-  Serial.println("Unrecognized command [");
-  Serial.println(cmd);
-  Serial.println("]!\nUse command [list] to list all commands.");
+  Serial.print("Unrecognized command [");
+  Serial.print(cmd);
+  Serial.print("]!\nUse n[list] to list all commands.");
 }
