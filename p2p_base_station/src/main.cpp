@@ -82,18 +82,25 @@ void die(void){
   }
 }
 
-void cmd_send()
-{
-  Serial.print("Sending Hello");
-
-  LoRa.beginPacket();
-  LoRa.print("hello!");
-  LoRa.endPacket();
+void cmd_send(){
+  Serial.println("Sending...");
+  char *arg;
+  arg = sCmd.next();
+  if (arg != NULL) {
+    LoRa.beginPacket();
+    LoRa.print(arg);
+    LoRa.endPacket();
+  }
+  else {
+    Serial.println("No command inserted!");
+    return;
+  }
+    Serial.println("Sent!");
 }
 
 void cmd_unrecognized(const char *cmd)
 {
   Serial.print("Unrecognized command [");
   Serial.print(cmd);
-  Serial.print("]!\nUse n[list] to list all commands.");
+  Serial.print("]!\nUse n[list] to list all commands.\n");
 }
